@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Inspiration</title>
+    <style>
+        /* Pinterest Inspired Pastel Theme Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: '-apple-system', BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
+        body {
+            background-color: #f9f6f0; /* Soft warm cream/off-white background */
+            color: #333333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* State management */
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- STATE 1: PINTEREST LOGIN CARD --- */
+        .login-card {
+            background: #ffffff;
+            padding: 40px 32px;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(223, 214, 201, 0.6); /* Soft warm shadow */
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #e60023; /* Pinterest Red */
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 16px auto;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #222222;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #767676;
+            font-size: 15px;
+            margin-bottom: 32px;
+        }
+
+        .error-message {
+            color: #cc3333;
+            background-color: #ffebeb;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #333333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #efece6;
+            background-color: #ffffff;
+            border-radius: 16px;
+            font-size: 16px;
+            color: #333333;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #cdb4db; /* Pastel Lavender focus border */
+            box-shadow: 0 0 0 4px rgba(205, 180, 219, 0.3);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 28px;
+            color: #555555;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: #ffb703;
+        }
+
+        .forgot-link {
+            color: #767676;
+            text-decoration: none;
+        }
+        .forgot-link:hover { text-decoration: underline; }
+
+        /* Pastel Pink/Coral Pinterest Button */
+        .pinterest-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #ffb5a7; /* Pastel Peach/Coral */
+            color: #ffffff;
+            border: none;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pinterest-btn:hover {
+            background-color: #fcd5ce; /* Lighter pastel peach */
+            color: #4a4a4a;
+            transform: translateY(-1px);
+        }
+
+        .signup-text {
+            margin-top: 24px;
+            font-size: 14px;
+            color: #767676;
+        }
+        .signup-text a { color: #e60023; text-decoration: none; font-weight: 600; }
+
+
+        /* --- STATE 2: PINTEREST HOME DASHBOARD LAYOUT --- */
+        .home-container {
+            width: 100%;
+            max-width: 1200px;
+            align-self: flex-start;
+            padding-top: 40px;
+        }
+
+        /* Top Bar Navigation Dashboard */
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 16px 32px;
+            border-radius: 50px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(223, 214, 201, 0.4);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-left h1 {
+            font-size: 20px;
+            color: #222222;
+        }
+
+        .welcome-badge {
+            background: #f0efeb;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #555555;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background-color: #ffcad4; /* Soft pastel pink */
+            color: #4a4a4a;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .logout-btn:hover { background-color: #f7a3b3; }
+
+        /* Pinterest Masonry Layout Grid */
+        .pinterest-grid {
+            column-count: 4;
+            column-gap: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 900px) { .pinterest-grid { column-count: 3; } }
+        @media (max-width: 600px) { .pinterest-grid { column-count: 2; } }
+
+        /* Pinterest Aesthetic Board Pins */
+        .pin {
+            background-color: #ffffff;
+            break-inside: avoid;
+            margin-bottom: 20px;
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 4px 15px rgba(223, 214, 201, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .pin:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(223, 214, 201, 0.5);
+        }
+
+        /* Multi-colored Pastel blocks imitating aesthetic photo cards */
+        .pin-image-placeholder {
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+
+        /* Random heights for accurate masonry look */
+        .h-small { height: 180px; }
+        .h-medium { height: 260px; }
+        .h-large { height: 340px; }
+
+        /* Pastel palette generator codes */
+        .p1 { background-color: #ffcad4; }
+        .p2 { background-color: #b5e2fa; }
+        .p3 { background-color: #edafb8; }
+        .p4 { background-color: #e2ece9; }
+        .p5 { background-color: #dfe7fd; }
+        .p6 { background-color: #f0e6ef; }
+
+        .pin-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 4px;
+            padding-left: 4px;
+        }
+
+        .pin-author {
+            font-size: 13px;
+            color: #767676;
+            padding-left: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card" id="loginCard">
+        <div class="logo-icon">P</div>
+        <h2>Welcome to your feed</h2>
+        <p class="subtitle">Find your next pastel moodboard concept.</p>
+        
+        <div class="error-message" id="errorBanner">Oops! That login combination isn't right.</div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required autocomplete="off">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+            
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="rememberMe"> Keep me signed in
+                </label>
+                <a href="#" class="forgot-link">Forgot?</a>
+            </div>
+            
+            <button type="submit" class="pinterest-btn">Log In</button>
+        </form>
+        <p class="signup-text">Not on here yet? <a href="#">Sign up</a></p>
+    </div>
+
+    <div class="home-container hidden" id="homeDashboard">
+        
+        <header class="nav-header">
+            <div class="nav-left">
+                <h1>✨ Daily Inspiration</h1>
+                <div class="welcome-badge" id="userDisplay">user@domain.com</div>
+            </div>
+            <button class="logout-btn" id="logoutBtn">Log Out</button>
+        </header>
+
+        <main class="pinterest-grid">
+            <div class="pin">
+                <div class="pin-image-placeholder h-medium p1"></div>
+                <div class="pin-title">Soft Pastel Sage Coziness</div>
+                <div class="pin-author">@aesthetic_dreamer</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-large p2"></div>
+                <div class="pin-title">Summer Skies & Warm Tea</div>
+                <div class="pin-author">@cottage_vibes</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-small p3"></div>
+                <div class="pin-title">Pink Tulip Fields</div>
+                <div class="pin-author">@floral_decor</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-large p4"></div>
+                <div class="pin-title">Minimalist Warm Living</div>
+                <div class="pin-author">@interior_pastel</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-small p5"></div>
+                <div class="pin-title">Lavender Study Sessions</div>
+                <div class="pin-author">@journal_co</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-medium p6"></div>
+                <div class="pin-title">Cozy Morning Sunlight Glow</div>
+                <div class="pin-author">@warm_cream</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-medium p2"></div>
+                <div class="pin-title">Chiffon Ceramic Inspiration</div>
+                <div class="pin-author">@artisan_mood</div>
+            </div>
+            <div class="pin">
+                <div class="pin-image-placeholder h-large p1"></div>
+                <div class="pin-title">Warm Silk Textures</div>
+                <div class="pin-author">@textile_co</div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Use any values you like here for testing your Local Storage flow!
+        const VALID_USER = "admin@nexus.com"; 
+        const VALID_PASS = "123456";
+
+        const loginCard = document.getElementById('loginCard');
+        const homeDashboard = document.getElementById('homeDashboard');
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorBanner = document.getElementById('errorBanner');
+        const userDisplay = document.getElementById('userDisplay');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // Session routing logic
+        function evaluateSession() {
+            const token = localStorage.getItem('pinterest_pastel_token');
+            if (token) {
+                userDisplay.textContent = `📍 ${token}`;
+                loginCard.classList.add('hidden');
+                homeDashboard.classList.remove('hidden');
+                document.body.style.alignItems = 'flex-start'; // Changes alignment dynamic for full board scroll
+            } else {
+                loginCard.classList.remove('hidden');
+                homeDashboard.classList.add('hidden');
+                document.body.style.alignItems = 'center'; // Center card exactly on login screen
+            }
+        }
+
+        // Handle Submit Auth
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailValue = emailInput.value.trim();
+            const passValue = passwordInput.value;
+
+            // Saves token to local storage and updates view seamlessly
+            localStorage.setItem('pinterest_pastel_token', emailValue);
+            errorBanner.style.display = 'none';
+            evaluateSession();
+            passwordInput.value = '';
+        });
+
+        // Handle Log out clean up
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('pinterest_pastel_token');
+            evaluateSession();
+        });
+
+        // Trigger on load check
+        window.addEventListener('DOMContentLoaded', evaluateSession);
+    </script>
+</body>
+</html>
